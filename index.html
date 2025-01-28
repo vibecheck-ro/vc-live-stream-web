@@ -67,11 +67,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
-        const roomId = getParamFromUrl('room-id');
-        const {room, participant} = await getRoomAndParticipant(roomId);
-        console.log(room)
-        console.log(participant)
-        loadUI(room, participant);
+        // const roomId = getParamFromUrl('room-id');
+        // const {room, participant} = await getRoomAndParticipant(roomId);
+        // console.log(room)
+        // console.log(participant)
+        // loadUI(room, participant);
         await startVideoPreview();
     })
 
