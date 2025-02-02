@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VibeCheck LIVE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <div id="top-bar">
+        <span></span>
+        <h4 id="title"></h4>
+        <button id="reload-page-btn">Reload</button>
+    </div>
+
+    <canvas id="live-stream-canvas" class="creator-video" style="display: none"></canvas>
+    <video id="creator-video" class="creator-video" autoplay playsinline></video>
+    <!--    <audio id="audio-player" autoplay></audio>-->
+
+    <div id="participant-video-container">
+        <div id="participant-video-top-bar">
+            <span id="participant-video-title">Bogdan G</span>
+        </div>
+        <video id="participant-video" class="participant-video" playsinline autoplay></video>
+        <div id="participant-video-bottom-bar">
+            <span id="participant-video-time">01:24</span>
+        </div>
+    </div>
+
+    <div id="controls"></div>
+
+    <div id="pre-live-overlay">
+        <button id="pre-live-button">GO</button>
+    </div>
+</main>
+<script src="main.ts" type="module"></script>
+</body>
+</html>
