@@ -2,7 +2,9 @@ import { API_URL } from './constants';
 import { Participant, Room, RoomWithParticipant } from './types';
 import { getAccessToken, getRoomId } from './utils';
 
-const apiUrl = `${ API_URL }:8080/v1`;
+const apiUrl = API_URL.includes( 'localhost' )
+               ? `${ API_URL }:8080/v1`
+               : `${ API_URL }/v1`;
 
 export const fetchRoomAndParticipant = async (): Promise<RoomWithParticipant> => {
 	const url = `${ apiUrl }/rooms/list/shareable/${ getRoomId() }`;
