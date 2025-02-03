@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import { API_URL } from './constants';
 import { Participant, RoomSocketHandlers } from './types';
 
 export default class Socket {
@@ -11,7 +12,7 @@ export default class Socket {
 	}
 
 	connect(): void {
-		const socket = io( 'https://vc-core-backend-development.up.railway.app:9092' );
+		const socket = io( `${ API_URL }:9092` );
 		socket.on( 'interaction:start', (data: Participant) => {
 			this.handlers.onInteractionStart( data );
 			console.log( `Participant ${ data.id } extracted for live interaction.` );

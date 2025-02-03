@@ -85,7 +85,7 @@ export default class LiveStream {
 		}
 
 		this.broadcastClient = IVSBroadcastClient.create( { streamConfig: this.streamConfig } );
-		// this.broadcastClient.attachPreview( this.canvasEL );
+		this.broadcastClient.attachPreview( this.canvasEL );
 
 		if( this.participant.isRoomCreator || this.participant.hasLiveInteraction ) {
 			await this.setVideoAndAudioStreams();
@@ -292,21 +292,21 @@ export default class LiveStream {
 	}
 
 	private renderParticipant(participant: StageParticipantInfo, streams: StageStream[]): void {
-		let streamsToLoad = streams;
-		if( participant.isLocal ) {
-			streamsToLoad = streams.filter( s => s.streamType === StreamType.VIDEO );
-		}
-		if( streamsToLoad.length === 0 ) {
-			return;
-		}
-
-		const videoEl = participant.userId === this.room.creator.id
-		                ? this.creatorVideoEl
-		                : this.participantVideoEl;
-		const mediaStream = videoEl.srcObject as MediaStream | undefined || new MediaStream();
-		streamsToLoad.forEach( stream => mediaStream.addTrack( stream.mediaStreamTrack ) );
-		videoEl.srcObject = mediaStream;
-		console.log( `Participant ${ participant.userId } rendered on screen` );
+		// let streamsToLoad = streams;
+		// if( participant.isLocal ) {
+		// 	streamsToLoad = streams.filter( s => s.streamType === StreamType.VIDEO );
+		// }
+		// if( streamsToLoad.length === 0 ) {
+		// 	return;
+		// }
+		//
+		// const videoEl = participant.userId === this.room.creator.id
+		//                 ? this.creatorVideoEl
+		//                 : this.participantVideoEl;
+		// const mediaStream = videoEl.srcObject as MediaStream | undefined || new MediaStream();
+		// streamsToLoad.forEach( stream => mediaStream.addTrack( stream.mediaStreamTrack ) );
+		// videoEl.srcObject = mediaStream;
+		// console.log( `Participant ${ participant.userId } rendered on screen` );
 	}
 
 	private async renderAudioToBroadcastClient(participant: StageParticipantInfo, stream?: StageStream): Promise<void> {
@@ -346,14 +346,12 @@ export default class LiveStream {
 	}
 
 	private async updateVideoCompositionsOnBroadcastClient(): Promise<void> {
-		// const creator = this.stageParticipants.find( (participant) => participant.isLocal )!;
-		// const participant = this.stageParticipants.find( (participant) => !participant.isLocal );
-		// const creatorVideoId = `video-${ creator.id }`;
-		// const participantVideoId = `video-${ participant?.id }`;
-		// this.broadcastClient.updateVideoDeviceComposition( creatorVideoId, this.layout.creator );
-		// if( participant ) {
-		// 	this.broadcastClient.updateVideoDeviceComposition( participantVideoId, this.layout.participant );
-		// }
+		const creator = this.stageParticipants.find( (participant) => participant.isLocal )!;
+		const participant = this.stageParticipants.find( (participant) => !participant.isLocal );
+		this.broadcastClient.updateVideoDeviceComposition( CREATOR_VIDEO_TRACK_ID, this.layout.creator );
+		if( participant ) {
+			this.broadcastClient.updateVideoDeviceComposition( PARTICIPANT_VIDEO_TRACK_ID, this.layout.participant );
+		}
 	}
 
 	private async setVideoAndAudioStreams(): Promise<void> {

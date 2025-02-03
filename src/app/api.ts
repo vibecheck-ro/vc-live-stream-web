@@ -1,24 +1,25 @@
+import { API_URL } from './constants';
 import { Participant, Room, RoomWithParticipant } from './types';
 import { getAccessToken, getRoomId } from './utils';
 
-const API_URL = 'https://vc-core-backend-development.up.railway.app/v1';
+const apiUrl = `${ API_URL }:8080/v1`;
 
 export const fetchRoomAndParticipant = async (): Promise<RoomWithParticipant> => {
-	const url = `${ API_URL }/rooms/list/shareable/${ getRoomId() }`;
+	const url = `${ apiUrl }/rooms/list/shareable/${ getRoomId() }`;
 	const response = await fetch( url, { headers: getHeaders() } );
 	const payload = await response.json();
 	return payload.data;
 };
 
 export const fetchParticipantWithLiveInteraction = async (roomId: string): Promise<Participant | null> => {
-	const url = `${ API_URL }/rooms/${ roomId }/participants/interactions/ongoing`;
+	const url = `${ apiUrl }/rooms/${ roomId }/participants/interactions/ongoing`;
 	const response = await fetch( url, { headers: getHeaders() } );
 	const payload = await response.json();
 	return payload.data;
 };
 
 export const startLiveStream = async (roomId: string): Promise<RoomWithParticipant> => {
-	const url = `${ API_URL }/rooms/live-stream/start`;
+	const url = `${ apiUrl }/rooms/live-stream/start`;
 	const body = JSON.stringify( { roomId } );
 	const response = await fetch( url, { method: 'POST', body, headers: getHeaders() } );
 	const payload = await response.json();
@@ -26,7 +27,7 @@ export const startLiveStream = async (roomId: string): Promise<RoomWithParticipa
 };
 
 export const stopLiveStream = async (roomId: string): Promise<Room> => {
-	const url = `${ API_URL }/rooms/live-stream/stop`;
+	const url = `${ apiUrl }/rooms/live-stream/stop`;
 	const body = JSON.stringify( { roomId } );
 	const response = await fetch( url, { method: 'POST', body, headers: getHeaders() } );
 	const payload = await response.json();
@@ -34,7 +35,7 @@ export const stopLiveStream = async (roomId: string): Promise<Room> => {
 };
 
 export const extractParticipantForLiveInteraction = async (roomId: string): Promise<Participant> => {
-	const url = `${ API_URL }/rooms/participants/extract-for-interaction`;
+	const url = `${ apiUrl }/rooms/participants/extract-for-interaction`;
 	const body = JSON.stringify( { roomId } );
 	const response = await fetch( url, { method: 'POST', body, headers: getHeaders() } );
 	const payload = await response.json();
@@ -42,7 +43,7 @@ export const extractParticipantForLiveInteraction = async (roomId: string): Prom
 };
 
 export const stopLiveInteraction = async (interactionId: string, stopReason: string): Promise<void> => {
-	const url = `${ API_URL }/rooms/interactions/stop`;
+	const url = `${ apiUrl }/rooms/interactions/stop`;
 	const body = JSON.stringify( { interactionId, stopReason } );
 	const response = await fetch( url, { method: 'POST', body, headers: getHeaders() } );
 	const payload = await response.json();
